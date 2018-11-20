@@ -7,9 +7,11 @@ import Stripes from "./Stripes";
 export class LargeHero extends Component {
   render() {
     return (
-      <div className="featured_wrapper">
-        <Stripes />
-        <Text />
+      <div className="bck_blue ">
+        <div className="featured_wrapper">
+          <Stripes />
+          <Text />
+        </div>
       </div>
     );
   }

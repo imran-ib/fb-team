@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Animate } from "react-move";
+
 import PlayerImage from "../../../../Resources/images/featured_player.png";
 
 export class Image extends Component {
@@ -21,8 +22,8 @@ export class Image extends Component {
         {({ opacity, x, y }) => (
           <div
             className="featured_player"
-            opacity
             style={{
+              opacity,
               background: `url(${PlayerImage})`,
               transform: `translate(${x}px , ${y}px)`
             }}
