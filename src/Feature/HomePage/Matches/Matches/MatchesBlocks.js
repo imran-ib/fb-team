@@ -25,7 +25,7 @@ export class MatchesBlocks extends Component {
   showMatches = matches =>
     matches
       ? matches.map(match => (
-          <div className="item">
+          <div key={match.id} className="item">
             <div className="wrapper">
               <Block match={match} />
             </div>
