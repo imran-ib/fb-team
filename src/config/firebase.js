@@ -19,4 +19,4 @@ const firebaseDB = firebase.database();
 const firebaseMatches = firebaseDB.ref("matches");
 // ─── GET PROMOTION EMAILS ───────────────────────────────────────────────────────
 const firebasePromotions = firebaseDB.ref("promotions");
-export { firebaseDB, firebaseMatches, firebasePromotions };
+export { firebase, firebaseMatches, firebasePromotions };

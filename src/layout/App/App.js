@@ -7,7 +7,7 @@ class App extends Component {
     return (
       <div className="App">
         <BrowserRouter>
-          <Routes />
+          <Routes user={this.props.user} />
         </BrowserRouter>
       </div>
     );

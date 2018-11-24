@@ -1,6 +1,9 @@
 import React, { Component } from "react";
 
-//components
+//
+// ─── COMPONENTS ─────────────────────────────────────────────────────────────────
+//
+
 import Text from "./Text/Text";
 import Stripes from "./Stripes";
 
