@@ -15,8 +15,8 @@ const config = {
 firebase.initializeApp(config);
 
 const firebaseDB = firebase.database();
-
-// get matches from database
+// ─── GET MATCHES FROM DATABASE ──────────────────────────────────────────────────
 const firebaseMatches = firebaseDB.ref("matches");
-
-export { firebaseDB, firebaseMatches };
+// ─── GET PROMOTION EMAILS ───────────────────────────────────────────────────────
+const firebasePromotions = firebaseDB.ref("promotions");
+export { firebaseDB, firebaseMatches, firebasePromotions };

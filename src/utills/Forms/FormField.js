@@ -1,8 +1,7 @@
 import React from "react";
 
-
-
 function FormField({ formData, id, change }) {
+  // ──────────────────────────────────────────────────────────────── SHOWERROR ─────
   const showError = () => {
     let errorMessage = (
       <div className="error_label">
@@ -13,7 +12,7 @@ function FormField({ formData, id, change }) {
     );
     return errorMessage;
   };
-
+  // ───────────────────────────────────────────────────────── RENDERFROMFIELDS ─────
   const renderFormFields = () => {
     let formTemplate = null;
     switch (formData.element) {
@@ -34,7 +33,7 @@ function FormField({ formData, id, change }) {
     }
     return formTemplate;
   };
-
+  // ─────────────────────────────────────────────────────────────────── RENDER ─────
   return <div>{renderFormFields()}</div>;
 }
 

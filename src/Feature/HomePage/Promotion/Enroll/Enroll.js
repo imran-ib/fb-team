@@ -3,6 +3,7 @@ import FormField from "./../../../../utills/Forms/FormField";
 
 // ─────────────────────────────────────────────────────────────── COMPONENTS ─────
 import { validate } from "./../../../../utills/helper";
+import { firebasePromotions } from "../../../../config/firebase";
 
 export class Enroll extends Component {
   state = {
@@ -47,13 +48,14 @@ export class Enroll extends Component {
       formdata: newFormdata
     });
   }
+
   // ─────────────────────────────────────────────────────────── FORMSUBMISSION ─────
   submitForm(event) {
     event.preventDefault();
 
     let dataToSubmit = {};
     let formIsValid = true;
-
+    // ─── CHECK VALIDATION BEFORE SUBMITING ──────────────────────────────────────────
     for (let key in this.state.formdata) {
       dataToSubmit[key] = this.state.formdata[key].value;
       formIsValid = this.state.formdata[key].valid && formIsValid;
@@ -62,21 +64,52 @@ export class Enroll extends Component {
     if (formIsValid) {
       // ──────────────────────────────────────────────────────────you can submit dataToSubmit to db  ─────
       // ─────────────────────────────────────────────────────────────────
-      // firebasePromotions.orderByChild('email').equalTo(dataToSubmit.email).once("value")
-      // .then((snapshot)=>{
-      //     if(snapshot.val() === null){
-      //         firebasePromotions.push(dataToSubmit);
-      //         this.resetFormSuccess(true);
-      //     }else{
-      //         this.resetFormSuccess(false);
-      //     }
-      // })
-      // ─────────────────────────────────────────────────────────────────
+      firebasePromotions
+        .orderByChild("email")
+        .equalTo(dataToSubmit.email)
+        .once("value")
+        .then(snapshot => {
+          if (snapshot.val() === null) {
+            // IF EMAIL IS NOT ON DB
+            firebasePromotions.push(dataToSubmit);
+            this.resetFormSuccess(true);
+          } else {
+            this.resetFormSuccess(false);
+          }
+        });
     } else {
       this.setState({
         formError: true
       });
     }
+    // ─────────────────────────────────────────────────────────────────
+  }
+  // ─────────────────── AFTER SUBMITING  RESET THE FORM AND SET SUCCESS MESSAGE ─────
+  resetFormSuccess = type => {
+    // ─── COPY OF STATE ───────────────────────────────────────────────
+    const newFormdata = { ...this.state.formdata };
+
+    for (let key in newFormdata) {
+      newFormdata[key].value = "";
+      newFormdata[key].valid = false;
+      newFormdata[key].validationMessage = "";
+
+      this.setState({
+        formError: false,
+        formdata: newFormdata,
+        formSuccess: type ? "Sucsess" : "already on database"
+      });
+      // ─── CLEAR SUCCESS MESSAGE ──────────────────────────────────────
+      this.clearSuccessMessge();
+    }
+  };
+  // ─── CLEAR SUCCESS MESSAGE ──────────────────────────────────────
+  clearSuccessMessge() {
+    setTimeout(() => {
+      this.setState({
+        formSuccess: ""
+      });
+    }, 2000);
   }
   render() {
     return (
@@ -92,7 +125,13 @@ export class Enroll extends Component {
             {this.state.formError ? (
               <div className="error_label">Something went wrong</div>
             ) : null}
+            <div className="success_label">{this.state.formSuccess}</div>
             <button onClick={event => this.submitForm(event)}>Enroll</button>
+            <div className="enroll_discl">
+              Lorem ipsum dolor sit amet consectetur adipisicing elit. Quis
+              aliquid, incidunt facilis doloribus corporis pariatur non
+              repellendus nulla amet dolorum !
+            </div>
           </div>
         </form>
       </div>
